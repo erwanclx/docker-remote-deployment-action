@@ -32,7 +32,7 @@ inputs:
 
 runs:
   using: docker
-  image: docker://wingsmc/docker-remote-deployment-action:purge-staging
+  image: docker://wingsmc/docker-remote-deployment-action:1.1
 
 
 branding:
