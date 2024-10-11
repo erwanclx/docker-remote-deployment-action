@@ -80,4 +80,8 @@ ${DEPLOYMENT_COMMAND} ${DEPLOYMENT_COMMAND_OPTIONS} pull
 echo "Command: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS}"
 ${DEPLOYMENT_COMMAND} ${DEPLOYMENT_COMMAND_OPTIONS} ${INPUT_ARGS}
 
+echo "Remove docker context"
+if docker context ls | grep -q 'staging'; then
+  docker context rm -f staging
+fi
 
