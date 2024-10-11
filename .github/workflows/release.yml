@@ -33,8 +33,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            taptap21/docker-remote-deployment-action:latest
-            taptap21/docker-remote-deployment-action:${{ github.event.release.tag_name }}
+            wingsmc/docker-remote-deployment-action:latest
+            wingsmc/docker-remote-deployment-action:${{ github.event.release.tag_name }}
 
 
 
