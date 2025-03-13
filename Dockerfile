@@ -1,7 +1,8 @@
-FROM docker:stable
+FROM docker:latest
 
-RUN apk --no-cache add openssh-client docker-compose
+RUN apk add --no-cache bash openssh-client
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
