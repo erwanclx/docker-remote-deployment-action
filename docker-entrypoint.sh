@@ -70,7 +70,13 @@ docker context use staging
 # Docker login if credentials are provided
 if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then
   echo "Connecting to $INPUT_REMOTE_DOCKER_HOST... Command: docker login"
-  docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY:-}"
+  
+  # Check if registry is provided, otherwise skip the registry parameter
+  if [ -n "${INPUT_DOCKER_LOGIN_REGISTRY:-}" ]; then
+    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
+  else
+    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD"
+  fi
 fi
 
 # Pull and deploy
