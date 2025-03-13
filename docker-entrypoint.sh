@@ -67,9 +67,7 @@ if ! docker context ls | grep -q 'staging'; then
 fi
 docker context use staging
 
-if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then
-  echo "Connecting to $INPUT_REMOTE_DOCKER_HOST... Command: docker login"
-  
+if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then 
   if [ -n "${INPUT_DOCKER_LOGIN_REGISTRY:-}" ]; then
     echo "Login to registry: ${INPUT_DOCKER_LOGIN_REGISTRY}"
     docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
