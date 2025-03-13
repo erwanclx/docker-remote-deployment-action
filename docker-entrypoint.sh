@@ -36,7 +36,6 @@ INPUT_SSH_PORT=${INPUT_SSH_PORT:-22}
 
 # Configuration variables
 STACK_FILE=${INPUT_STACK_FILE_NAME}
-DEPLOYMENT_COMMAND_OPTIONS="--host ssh://$INPUT_REMOTE_DOCKER_HOST:$INPUT_SSH_PORT"
 DEPLOYMENT_COMMAND="docker-compose -f $STACK_FILE"
 SSH_HOST=${INPUT_REMOTE_DOCKER_HOST#*@}
 
@@ -67,6 +66,7 @@ if ! docker context ls | grep -q 'staging'; then
 fi
 docker context use staging
 
+# Docker login
 if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then 
   if [ -n "${INPUT_DOCKER_LOGIN_REGISTRY:-}" ]; then
     echo "Login to registry: ${INPUT_DOCKER_LOGIN_REGISTRY}"
@@ -78,11 +78,11 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
 fi
 
 # Pull and deploy
-echo "Command: ${DEPLOYMENT_COMMAND} pull"
-${DEPLOYMENT_COMMAND} ${DEPLOYMENT_COMMAND_OPTIONS} pull
+echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull"
+docker-compose -f "$STACK_FILE" pull
 
-echo "Command: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS}"
-${DEPLOYMENT_COMMAND} ${DEPLOYMENT_COMMAND_OPTIONS} ${INPUT_ARGS}
+echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS}"
+docker-compose -f "$STACK_FILE" ${INPUT_ARGS}
 
 # Cleanup
 echo "Remove docker context"
