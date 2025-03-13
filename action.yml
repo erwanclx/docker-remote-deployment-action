@@ -1,5 +1,5 @@
 name: Docker-Compose Remote Deployment
-author: Wernich Bekker<wernich.bekker+dev@gmail.com>
+author: Erwan Cloux<hi@erwancloux.fr>
 description: A GitHub Action that supports docker-compose on remote hosts
 inputs:
   remote_docker_host:
@@ -32,10 +32,8 @@ inputs:
 
 runs:
   using: docker
-  image: docker://wingsmc/docker-remote-deployment-action:1.1
-
+  image: docker://erwanclx/docker-remote-deployment-action:1.1
 
 branding:
   icon: send
   color: green
-
