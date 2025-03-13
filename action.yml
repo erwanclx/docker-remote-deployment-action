@@ -1,4 +1,4 @@
-name: Docker-Compose Remote Deployment
+name: Docker Compose Remote Deployment Action
 author: Erwan Cloux
 description: A GitHub Action that supports docker-compose on remote hosts
 inputs:
