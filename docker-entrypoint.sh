@@ -78,11 +78,11 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
 fi
 
 # Pull and deploy
-echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull"
-docker compose -f "$STACK_FILE" pull
+echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull on staging context"
+DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" pull
 
-echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS}"
-docker compose -f "$STACK_FILE" ${INPUT_ARGS}
+echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS} on staging context"
+DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
 # Cleanup
 echo "Remove docker context"
