@@ -36,7 +36,7 @@ INPUT_SSH_PORT=${INPUT_SSH_PORT:-22}
 
 # Configuration variables
 STACK_FILE=${INPUT_STACK_FILE_NAME}
-DEPLOYMENT_COMMAND="docker-compose -f $STACK_FILE"
+DEPLOYMENT_COMMAND="docker compose -f $STACK_FILE"
 SSH_HOST=${INPUT_REMOTE_DOCKER_HOST#*@}
 
 # Setup SSH keys
@@ -79,10 +79,10 @@ fi
 
 # Pull and deploy
 echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull"
-docker-compose -f "$STACK_FILE" pull
+docker compose -f "$STACK_FILE" pull
 
 echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS}"
-docker-compose -f "$STACK_FILE" ${INPUT_ARGS}
+docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
 # Cleanup
 echo "Remove docker context"
