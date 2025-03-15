@@ -77,6 +77,9 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
   fi
 fi
 
+echo "docker context ls"
+docker context ls
+
 # Pull and deploy
 echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull on staging context"
 DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" pull
