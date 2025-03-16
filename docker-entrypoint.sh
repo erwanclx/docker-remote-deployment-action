@@ -67,19 +67,22 @@ ssh-keyscan -p "$INPUT_SSH_PORT" "$SSH_HOST" >> /etc/ssh/ssh_known_hosts
 
 # Set Docker context
 echo "Create docker context"
-if ! docker context ls | grep -q 'staging'; then
-  docker context create staging --docker "host=ssh://$INPUT_REMOTE_DOCKER_HOST:$INPUT_SSH_PORT"
-fi
+docker context create staging --docker "host=ssh://$INPUT_REMOTE_DOCKER_HOST:$INPUT_SSH_PORT"
 docker context use staging
+
+# Debug info
+DOCKER_CONTEXT=staging docker context inspect staging
+
+
 
 # Docker login
 if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then 
   if [ -n "${INPUT_DOCKER_LOGIN_REGISTRY:-}" ]; then
     echo "Login to registry: ${INPUT_DOCKER_LOGIN_REGISTRY}"
-    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
+    DOCKER_CONTEXT=staging docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
   else
     echo "Login to default registry"
-    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD"
+    DOCKER_CONTEXT=staging docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD"
   fi
 fi
 
@@ -92,6 +95,4 @@ DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
 # Cleanup
 echo "Remove docker context"
-if docker context ls | grep -q 'staging'; then
-  docker context rm -f staging
-fi
+docker context rm -f staging
