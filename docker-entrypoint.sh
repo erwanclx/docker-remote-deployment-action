@@ -39,6 +39,8 @@ STACK_FILE=${INPUT_STACK_FILE_NAME}
 DEPLOYMENT_COMMAND="docker compose -f $STACK_FILE"
 SSH_HOST=${INPUT_REMOTE_DOCKER_HOST#*@}
 
+echo "========== REMOTE DOCKER DEPLOYMENT WITH DOCKER:23 =========="
+
 # Setup SSH keys
 echo "Registering SSH keys..."
 mkdir -p ~/.ssh

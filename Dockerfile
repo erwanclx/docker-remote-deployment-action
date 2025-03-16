@@ -1,5 +1,5 @@
 # FROM docker:latest
-FROM docker:20.10.14
+FROM docker:23
 
 RUN apk add --no-cache bash openssh-client
 
