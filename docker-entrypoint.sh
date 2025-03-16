@@ -39,8 +39,6 @@ STACK_FILE=${INPUT_STACK_FILE_NAME}
 DEPLOYMENT_COMMAND="docker compose -f $STACK_FILE"
 SSH_HOST=${INPUT_REMOTE_DOCKER_HOST#*@}
 
-echo "========== REMOTE DOCKER DEPLOYMENT WITH DOCKER:23 =========="
-
 # Setup SSH keys
 echo "Registering SSH keys..."
 mkdir -p ~/.ssh
@@ -56,11 +54,9 @@ chmod 600 ~/.ssh/id_rsa.pub
 eval $(ssh-agent)
 ssh-add ~/.ssh/id_rsa
 
-tee -a ~/.ssh/config <<EOF
-Host *
+echo "Host *
   AddKeysToAgent yes
-  UseKeychain yes
-EOF
+  UseKeychain yes" > ~/.ssh/config
 
 # Add host to known hosts
 echo "Add known hosts"
