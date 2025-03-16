@@ -84,6 +84,9 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
   fi
 fi
 
+# debug
+cat /github/home/.docker/config.json
+
 # Pull and deploy
 echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull on staging context"
 DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" pull
