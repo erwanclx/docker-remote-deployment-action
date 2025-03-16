@@ -54,6 +54,12 @@ chmod 600 ~/.ssh/id_rsa.pub
 eval $(ssh-agent)
 ssh-add ~/.ssh/id_rsa
 
+tee -a ~/.ssh/config <<EOF
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+EOF
+
 # Add host to known hosts
 echo "Add known hosts"
 ssh-keyscan -p "$INPUT_SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
