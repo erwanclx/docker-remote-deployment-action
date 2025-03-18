@@ -54,10 +54,6 @@ chmod 600 ~/.ssh/id_rsa.pub
 eval $(ssh-agent)
 ssh-add ~/.ssh/id_rsa
 
-echo "Host *
-  AddKeysToAgent yes
-  UseKeychain yes" > ~/.ssh/config
-
 # Add host to known hosts
 echo "Add known hosts"
 ssh-keyscan -p "$INPUT_SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
@@ -65,13 +61,9 @@ ssh-keyscan -p "$INPUT_SSH_PORT" "$SSH_HOST" >> /etc/ssh/ssh_known_hosts
 
 # Set Docker context
 echo "Create docker context"
+unset DOCKER_HOST
 docker context create staging --docker "host=ssh://$INPUT_REMOTE_DOCKER_HOST:$INPUT_SSH_PORT"
 docker context use staging
-
-# Debug info
-DOCKER_CONTEXT=staging docker context inspect staging
-
-
 
 # Docker login
 if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then 
@@ -84,15 +76,11 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
   fi
 fi
 
-# debug
-cat /github/home/.docker/config.json
-
 # Pull and deploy
-echo "Pulling images with: ${DEPLOYMENT_COMMAND} pull on staging context"
-DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" pull
+docker compose -f "$STACK_FILE" pull
 
 echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS} on staging context"
-DOCKER_CONTEXT=staging docker compose -f "$STACK_FILE" ${INPUT_ARGS}
+docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
 # Cleanup
 echo "Remove docker context"
