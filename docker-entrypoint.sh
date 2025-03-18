@@ -69,10 +69,10 @@ docker context use staging
 if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:-}" ]; then 
   if [ -n "${INPUT_DOCKER_LOGIN_REGISTRY:-}" ]; then
     echo "Login to registry: ${INPUT_DOCKER_LOGIN_REGISTRY}"
-    DOCKER_CONTEXT=staging docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
+    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD" "${INPUT_DOCKER_LOGIN_REGISTRY}"
   else
     echo "Login to default registry"
-    DOCKER_CONTEXT=staging docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD"
+    docker login -u "$INPUT_DOCKER_LOGIN_USER" -p "$INPUT_DOCKER_LOGIN_PASSWORD"
   fi
 fi
 
@@ -82,6 +82,4 @@ docker compose -f "$STACK_FILE" pull
 echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS} on staging context"
 docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
-# Cleanup
-echo "Remove docker context"
-docker context rm -f staging
+echo "Deployment completed successfully!"
