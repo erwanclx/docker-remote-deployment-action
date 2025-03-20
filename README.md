@@ -22,6 +22,12 @@ Below is an example of how the action can be used
     args: -p myapp up -d
 ```
 
+-----------------
+
+Read about the integration [in the following Github Action](AdonisSample.md)
+
+-----------------
+
 Use the latest tag to run the latest build or a specific version tag. The action pulls a docker image instead of building one to improve performance.
 ## Input
 
