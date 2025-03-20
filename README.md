@@ -24,7 +24,7 @@ Below is an example of how the action can be used
 
 -----------------
 
-Read about the integration [in the following Github Action](AdonisSample.md)
+Read about the integration [in the following Github Action](AdonisSample.yml)
 
 -----------------
 
