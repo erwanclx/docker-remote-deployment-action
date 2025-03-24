@@ -14,6 +14,9 @@ inputs:
   args:
     description: Deployment command args.
     required: true
+  additional_commands:
+    description: Optional additional commands to run after deployment
+    required: false
   stack_file_name:
     description: Docker stack file used. Default is docker-compose.yaml
     required: false

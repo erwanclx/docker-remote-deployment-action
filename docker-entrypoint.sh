@@ -80,6 +80,11 @@ fi
 docker compose -f "$STACK_FILE" pull
 
 echo "Deploying with: ${DEPLOYMENT_COMMAND} ${INPUT_ARGS} on staging context"
-docker compose -f "$STACK_FILE" ${INPUT_ARGS}
 
-echo "Deployment completed successfully!"
+# Check if optionnal additional commands are provided'
+if [ -n "${INPUT_ADDITIONAL_COMMANDS:-}" ]; then
+  echo "Additional commands provided: ${INPUT_ADDITIONAL_COMMANDS}"
+  eval ${INPUT_ADDITIONAL_COMMANDS}
+fi
+
+docker compose -f "$STACK_FILE" ${INPUT_ARGS}

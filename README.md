@@ -61,6 +61,10 @@ The SSH port to be used. Default is 22.
 
 Docker stack file used. Default is docker-compose.yml
 
+### `additional_commands`
+
+Additional commands to run on the remote host before running the docker-compose command.
+
 ### `docker_login_user`
 
 The username for the container repository user. (DockerHub, ECR, etc.)
