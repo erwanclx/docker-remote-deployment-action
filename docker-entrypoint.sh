@@ -76,6 +76,9 @@ if [ -n "${INPUT_DOCKER_LOGIN_USER:-}" ] && [ -n "${INPUT_DOCKER_LOGIN_PASSWORD:
   fi
 fi
 
+# Get the environment variables
+export $(printenv)
+
 # Pull and deploy
 docker compose -f "$STACK_FILE" pull
 
